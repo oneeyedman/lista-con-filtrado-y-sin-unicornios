@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import FilterButton from './components/FilterButton';
+import FilteredList from './components/FilteredList';
 import './App.css';
 
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
 
     this.state = {
       q: '',
+      telita: 5,
       items : [
         {
           name:"Cereales con chocolate",
@@ -46,30 +48,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button className="btn btn-primary" data-q="bebida" onClick={this.changeFilter}>Bebida</button>
-        <ul className="item-list">
-          {
-            this.state.items
-              .filter(article=>{
-                return article.category.toLocaleLowerCase().includes(this.state.q.toLocaleLowerCase());
-              })
-              .map(item => {
-                return (
-                  <li>
-                    <div className="item">
-                      <h5 className="quantity">{ item.quantity }</h5>
-                      <div>
-                        <h5>{ item.name }</h5>
-                        <h6 className="text-muted">{ item.description }</h6>
-                      </div>
-                      <div className="badge badge-info">{ item.category }</div>
-                      <h5 className="price">{ item.price }€</h5>
-                    </div>
-                  </li>
-                );
-            })
-          }
+        <ul>
+          <li><FilterButton label="Bebida" q="bebida" filter={this.changeFilter} /></li>
+          <li><FilterButton label="Cereales" q="cereal" filter={this.changeFilter} /></li> 
+          <li><FilterButton label="Fast food" q="fast-food" filter={this.changeFilter} /></li> 
         </ul>
+      
+        <FilteredList articles={this.state.items} q={this.state.q} latela={this.state.telita} />
+        
       </div>
     );
   }
